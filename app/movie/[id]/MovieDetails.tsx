@@ -1,3 +1,4 @@
+
 import { getMovieDetails } from "@/app/actions";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -10,12 +11,8 @@ function formatRuntime(minutes: number) {
   return `${hours}h ${remainingMinutes}m`;
 }
 
-export default async function MovieDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const movie = await getMovieDetails(params.id);
+export default async function MovieDetails({ movieId }: { movieId: string }) {
+  const movie = await getMovieDetails(movieId);
 
   if (!movie) {
     notFound();
@@ -23,15 +20,17 @@ export default async function MovieDetailsPage({
 
   return (
     <div className="relative">
-      <Image
-        src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-        alt={movie.title}
-        width={1080}
-        height={1000}
-        className="object-cover w-full"
-        priority
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/20" />
+      <div className="">
+        <Image
+          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+          alt={movie.title}
+          width={1080}
+          height={1000}
+          className="object-cover w-full"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/20" />
+      </div>
       <div className="absolute bottom-0 left-0 right-0 px-6 py-8">
         <div className="flex gap-6">
           <div className="relative flex-shrink-0">
@@ -46,7 +45,7 @@ export default async function MovieDetailsPage({
           </div>
           <div className="flex flex-col justify-end">
             <h1 className="text-4xl font-bold flex items-center gap-4">
-              {movie.title}
+              {movie.title}{" "}
               <span className="text-muted-foreground">
                 ({new Date(movie.release_date).getFullYear()})
               </span>

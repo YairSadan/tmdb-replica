@@ -28,3 +28,12 @@ export type MovieResponse = {
 export type GenreResponse = {
   genres: Genre[];
 };
+
+export type MovieDetails = Movie & {
+  budget: number;
+  revenue: number;
+  runtime: number;
+  status: string;
+  tagline: string;
+  genres: Genre[];
+};

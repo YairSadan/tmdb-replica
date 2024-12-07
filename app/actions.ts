@@ -62,3 +62,30 @@ async function getAiringMovies(pageIndex: number): Promise<Movie[]> {
 async function getPopularMovies(pageIndex: number): Promise<Movie[]> {
   return fetchMoviesWithGenres("/discover/movie", pageIndex);
 }
+
+interface MovieDetails extends Movie {
+  budget: number;
+  revenue: number;
+  runtime: number;
+  status: string;
+  tagline: string;
+  genres: Genre[];
+}
+
+export async function getMovieDetails(id: string): Promise<MovieDetails | null> {
+  try {
+    const response = await fetch(
+      `${TMDB_BASE_URL}/movie/${id}`,
+      HEADERS
+    );
+    
+    if (!response.ok) {
+      throw new Error('Movie not found');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching movie details:", error);
+    return null;
+  }
+}
