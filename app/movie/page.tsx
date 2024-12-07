@@ -1,8 +1,6 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getMovies } from "../actions";
 import Image from "next/image";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import {
   Pagination,
   PaginationContent,
@@ -111,22 +109,26 @@ export default async function Page({
       </div>
       <Pagination>
         <PaginationContent>
+          {currentPage > 1 && (
+            <>
+              <PaginationItem>
+                <PaginationPrevious href={buildPageUrl(prevPage)} />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href={buildPageUrl(prevPage)}>
+                  {prevPage}
+                </PaginationLink>
+              </PaginationItem>
+            </>
+          )}
           <PaginationItem>
-            <PaginationPrevious href={buildPageUrl(prevPage)} />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href={buildPageUrl(1)} isActive={currentPage === 1}>
-              1
+            <PaginationLink href={buildPageUrl(currentPage)} isActive>
+              {currentPage}
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink href={buildPageUrl(2)} isActive={currentPage === 2}>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href={buildPageUrl(3)} isActive={currentPage === 3}>
-              3
+            <PaginationLink href={buildPageUrl(nextPage)}>
+              {nextPage}
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
