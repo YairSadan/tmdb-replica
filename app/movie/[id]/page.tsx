@@ -10,12 +10,9 @@ function formatRuntime(minutes: number) {
   return `${hours}h ${remainingMinutes}m`;
 }
 
-export default async function MovieDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const movie = await getMovieDetails(params.id);
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = await params;
+  const movie = await getMovieDetails(id);
 
   if (!movie) {
     notFound();
