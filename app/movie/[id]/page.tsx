@@ -10,7 +10,9 @@ function formatRuntime(minutes: number) {
   return `${hours}h ${remainingMinutes}m`;
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+type Params = Promise<{ id: string }>;
+
+export default async function Page({ params }: { params: Params }) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
 
